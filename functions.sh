@@ -22,7 +22,7 @@ function prompt_new_ws() {
         esac
         
     done
-    printf "${LIGHT_BLUE_TXT}Please enter the WS name, will create ~/####_ws/src:${NC}\n"
+    printf "${LIGHT_BLUE_TXT}Please enter the WS name, will create ~/data/####_ws/src:${NC}\n"
     read -p ":  " name
     createWS $type $name
 }
@@ -36,8 +36,8 @@ function createWS() {
         if [[ -z "${name}" ]]; then
             printf "${RED_TXT}ROS workspace name not specified.${NC}\n"
         else
-            mkdir -p ~/${name}_ws/src
-            set_current_ws ~/${name}_ws
+            mkdir -p ~/data/${name}_ws/src
+            set_current_ws ~/data/${name}_ws
             get_current_ws
             cd $curr_ws
             if [[ $type == "ROS1" ]]; then # Catkin found in ws
@@ -262,13 +262,13 @@ function rebuild_curr_ws() {
 }
 
 function find_ws() {
-    #ws=$(find ~/ -maxdepth 1 -type d -name \*ws\* | sort)
-    ws=$(find ~/ -maxdepth 1 -type d -name "*_ws" -not -name ".*" | sort)
+    #ws=$(find ~/data/ -maxdepth 1 -type d -name \*ws\* | sort)
+    ws=$(find ~/data/ -maxdepth 1 -type d -name "*_ws" -not -name ".*" | sort)
 
     # echo $ws
     arrIN=(${ws// / })
     # echo ${arrIN[2]}
-    printf "${GREEN_TXT}Workspaces in ~${NC}\n"
+    printf "${GREEN_TXT}Workspaces in ~/data/${NC}\n"
     # Search for longest ws name
     max_l=0
     for i in "${arrIN[@]}"; do
